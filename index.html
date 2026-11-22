@@ -128,8 +128,10 @@
         </article>
 
         <article class="project">
-          <a href="https://gw2-arcdps-helper.vercel.app" target="_blank" rel="noopener" class="project__media" data-cursor="Visit">
-            <img src="assets/gw2.jpg" alt="GW2 ArcDPS Helper landing page with a live clears dashboard" width="1440" height="900">
+          <a href="https://gw2-arcdps-helper.vercel.app" target="_blank" rel="noopener" class="project__media project__media--slider" data-cursor="Visit" data-slider>
+            <img class="slide is-active" src="assets/gw2.jpg" alt="GW2 ArcDPS Helper landing page with a live clears dashboard" width="1440" height="900">
+            <img class="slide" src="assets/gw2-dashboard.jpg" alt="GW2 ArcDPS Helper overview: total logs, kills, wipes, weekly clears and activity charts" width="1878" height="941">
+            <span class="slider__bars" aria-hidden="true"><i></i><i></i></span>
           </a>
           <div class="project__body" data-fade>
             <div class="project__top">
@@ -204,8 +206,23 @@
           <span class="role__date mono">Jan 2026 &mdash; Now</span>
           <div>
             <h3>Software Engineer <span class="muted">at Levi9 Technology Services</span></h3>
-            <!-- TODO: add one sentence about what you work on -->
-            <p>Full-stack engineering in Novi Sad, continuing from the Levi9 student scholarship.</p>
+            <p>Full-stack engineer on client teams for companies in the Netherlands.</p>
+            <ul class="clients">
+              <li>
+                <a href="https://eccasion.com" target="_blank" rel="noopener">Eccasion
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+                <span>Portal for buying and auctioning cars in the Netherlands.</span>
+              </li>
+              <li>
+                <a href="https://www.ns.nl" target="_blank" rel="noopener">NS <span class="muted">Dutch Railways</span>
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+                <span>Internal portal for on-board train staff.</span>
+              </li>
+              <li>
+                <strong class="client-name">BDecisionOS</strong>
+                <span>Finds business bottlenecks and suggests changes for profitability.</span>
+              </li>
+            </ul>
           </div>
         </li>
         <li class="role">

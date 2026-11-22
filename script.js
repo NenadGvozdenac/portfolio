@@ -21,6 +21,32 @@
   }, { rootMargin: '-45% 0px -50% 0px' });
   links.forEach(a => { const s = document.querySelector(a.getAttribute('href')); if (s) io.observe(s); });
 
+  /* ---------- Auto image slider (runs without GSAP too) ---------- */
+  document.querySelectorAll('[data-slider]').forEach(slider => {
+    const slides = [...slider.querySelectorAll('.slide')];
+    const bars = [...slider.querySelectorAll('.slider__bars i')];
+    if (slides.length < 2) return;
+    const DURATION = 4500;
+    slider.style.setProperty('--slide-ms', DURATION + 'ms');
+    let index = 0, timer = null;
+    const show = i => {
+      index = i;
+      slides.forEach((s, k) => s.classList.toggle('is-active', k === i));
+      bars.forEach((b, k) => {
+        b.classList.remove('is-active');
+        b.classList.toggle('is-done', k < i);
+      });
+      void bars[i].offsetWidth; // restart the bar animation
+      bars[i].classList.add('is-active');
+    };
+    const next = () => show((index + 1) % slides.length);
+    const start = () => { stop(); timer = setInterval(next, DURATION); };
+    const stop = () => { if (timer) clearInterval(timer); timer = null; };
+    show(0);
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) start();
+    document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); else { show(index); start(); } });
+  });
+
   /* ---------- Static fallback ---------- */
   const preloader = document.querySelector('.preloader');
   if (!hasGsap || reduced) {
@@ -205,20 +231,28 @@
   /* ---------- Scroll progress ---------- */
   gsap.to('.nav__progress', { scaleX: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: 0.3 } });
 
-  /* ---------- Marquee (velocity driven) ---------- */
+  /* ---------- Marquee (constant speed) ---------- */
   const track = document.querySelector('.marquee__track');
-  const groups = track.querySelectorAll('.marquee__group');
-  let mqX = 0, mqDir = -1, mqSkew = 0;
+  const groups = track.getElementsByClassName('marquee__group');
+  // Keep enough copies so the strip always covers the viewport plus one loop width.
+  const fillMarquee = () => {
+    const w = groups[0].offsetWidth;
+    if (!w) return;
+    while (groups.length * w < window.innerWidth + w * 2) {
+      const clone = groups[0].cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      track.appendChild(clone);
+    }
+  };
+  fillMarquee();
+  window.addEventListener('resize', fillMarquee);
+  document.fonts && document.fonts.ready.then(fillMarquee);
+  let mqX = 0;
   gsap.ticker.add((time, delta) => {
-    const v = lenis ? lenis.velocity : 0;
-    if (Math.abs(v) > 0.1) mqDir = v > 0 ? -1 : 1;
-    const speed = (0.06 + Math.min(Math.abs(v) * 0.05, 2.2)) * delta;
-    mqX += mqDir * speed;
+    mqX -= 0.06 * delta;
     const w = groups[0].offsetWidth;
     if (mqX <= -w) mqX += w;
-    if (mqX > 0) mqX -= w;
-    mqSkew += (gsap.utils.clamp(-14, 14, -v * 0.6) - mqSkew) * 0.1;
-    track.style.transform = `translate3d(${mqX}px,0,0) skewX(${mqSkew.toFixed(2)}deg)`;
+    track.style.transform = `translate3d(${mqX}px,0,0)`;
   });
 
   /* ---------- Headings: word mask reveal ---------- */
@@ -260,7 +294,7 @@
   document.querySelectorAll('.role').forEach(row => {
     const tl = gsap.timeline({ scrollTrigger: { trigger: row, start: 'top 88%' } });
     tl.from(row.querySelector('.role__line'), { scaleX: 0, duration: 1.4, ease: 'expo.inOut' })
-      .from(row.querySelectorAll('.role__date, h3, p'), { y: 24, autoAlpha: 0, duration: 1, ease: 'expo.out', stagger: 0.08 }, 0.25);
+      .from(row.querySelectorAll('.role__date, h3, p, .clients li'), { y: 24, autoAlpha: 0, duration: 1, ease: 'expo.out', stagger: 0.08 }, 0.25);
   });
 
   /* ---------- List items ---------- */
@@ -310,21 +344,6 @@
         yTo((e.clientY - r.top - r.height / 2) * 0.4);
       });
       el.addEventListener('pointerleave', () => { xTo(0); yTo(0); });
-    });
-  }
-
-  /* ---------- Project hover tilt ---------- */
-  if (finePointer) {
-    document.querySelectorAll('.project__media:not(.project__media--phones)').forEach(m => {
-      gsap.set(m, { transformPerspective: 1000 });
-      const rx = gsap.quickTo(m, 'rotationX', { duration: 0.8, ease: 'power3' });
-      const ry = gsap.quickTo(m, 'rotationY', { duration: 0.8, ease: 'power3' });
-      m.addEventListener('pointermove', e => {
-        const r = m.getBoundingClientRect();
-        ry(((e.clientX - r.left) / r.width - 0.5) * 6);
-        rx(-((e.clientY - r.top) / r.height - 0.5) * 6);
-      });
-      m.addEventListener('pointerleave', () => { rx(0); ry(0); });
     });
   }
 
