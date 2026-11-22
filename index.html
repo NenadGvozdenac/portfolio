@@ -7,7 +7,7 @@
   <meta name="description" content="Nenad Gvozdenac - full-stack engineer in Novi Sad, building products end to end.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300..800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300..800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%2712%27 fill=%27%23141413%27/%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%274%27 fill=%27%23f6f5f1%27/%3E%3C/svg%3E">
   <script>
@@ -55,10 +55,20 @@
       <canvas class="hero__canvas" aria-hidden="true"></canvas>
       <div class="wrap hero__inner">
 
-        <h1 class="hero__title">
-          <span class="hero__name">Nenad Gvozdenac</span>
-          <span class="hero__role"><em>Full-stack engineer</em> building products<br>end to end, from idea to production.</span>
-        </h1>
+        <div class="hero__top">
+
+          <h1 class="hero__title">
+            <span class="hero__name">Nenad Gvozdenac</span>
+            <span class="hero__role"><em>Full-stack engineer</em> building products<br>end to end, from idea to production.</span>
+          </h1>
+
+          <figure class="hero__photo intro">
+
+            <img src="assets/nenad-800.jpg" alt="Portrait of Nenad Gvozdenac" width="800" height="800">
+
+          </figure>
+
+        </div>
 
         <div class="hero__foot">
           <p class="lede intro">I take products from a blank page to real users: interfaces people enjoy using, backends that hold up under load, and everything in between.</p>
@@ -155,12 +165,14 @@
       </div>
       <div class="about">
         <div class="about__intro">
-          <p class="about__lead" data-scrub>I enjoy turning real problems into <em>working, well-built software</em>, and I treat learning as part of the job: new tools, new ideas, sharper thinking.</p>
+          <div class="about__copy">
+            <p class="about__lead" data-scrub>I enjoy turning real problems into <em>working, well-built software</em>, and I treat learning as part of the job: new tools, new ideas, sharper thinking.</p>
+            <p class="about__text" data-fade>I work across the whole stack, from interface details to data models and deployment, and I care about the product as much as the code. My background is in electrical and computer engineering, with bachelor's and master's degrees with honours from the Faculty of Technical Sciences in Novi Sad.</p>
+          </div>
           <figure class="about__photo" data-cursor="Hi">
-            <img src="assets/nenad-800.jpg" alt="Portrait of Nenad Gvozdenac" width="800" height="800">
+            <img src="assets/nenad-hero.jpg" alt="Nenad Gvozdenac holding his bachelor thesis at the Faculty of Technical Sciences" width="1000" height="1250">
           </figure>
         </div>
-        <p class="about__text" data-fade>I work across the whole stack, from interface details to data models and deployment, and I care about the product as much as the code. My background is in electrical and computer engineering, with bachelor's and master's degrees with honours from the Faculty of Technical Sciences in Novi Sad.</p>
         <div class="about__cols" data-fade>
           <div>
             <h3 class="label mono" data-scramble>Focus</h3>
